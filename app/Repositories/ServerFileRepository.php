@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Filters\DataFilter;
+use App\Filters\MemoryFilter;
 use App\Filters\StorageFilter;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -17,7 +18,7 @@ class ServerFileRepository implements RepositoryInterface
         $spreadsheet = IOFactory::load(storage_path('servers/LeaseWeb_servers_filters_assignment.xlsx'));
         $servers = $spreadsheet->getActiveSheet()->toArray();
 
-        // removing headers
+        // remove headers
         unset($servers[0]);
 
         return $servers;
@@ -34,6 +35,11 @@ class ServerFileRepository implements RepositoryInterface
         if (isset($filters['storage'])) {
             $storageFilter = new StorageFilter($filters['storage']);
             $this->dataFilter->addFilter($storageFilter);
+        }
+
+        if (isset($filters['ram'])) {
+            $memoryFilter = new MemoryFilter($filters['ram']);
+            $this->dataFilter->addFilter($memoryFilter);
         }
 
         return $this->dataFilter->applyFilters($servers);
