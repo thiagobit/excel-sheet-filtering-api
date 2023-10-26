@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Traits;
 
 use App\Traits\ConversionTrait;
 use PHPUnit\Framework\TestCase;
