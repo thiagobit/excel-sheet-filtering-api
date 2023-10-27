@@ -2,51 +2,41 @@
 
 namespace Filters;
 
-use App\Filters\DataFilter;
 use App\Filters\HardDiskTypeFilter;
 use App\Filters\LocationFilter;
 use App\Filters\MemoryFilter;
 use App\Filters\StorageFilter;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\FilterTestCase;
 
-class DataFilterTest extends TestCase
+class DataFilterTest extends FilterTestCase
 {
     /** @test */
     public function filters_can_be_added()
     {
-        $dataFilter = new DataFilter();
-
         $storageFilter = new StorageFilter('2TB');
         $memoryFilter = new MemoryFilter(['32', '64']);
         $hardDiskTypeFilter = new HardDiskTypeFilter('SSD');
         $locationFilter = new LocationFilter('Amsterdam');
 
-        $dataFilter->addFilter($storageFilter);
-        $dataFilter->addFilter($memoryFilter);
-        $dataFilter->addFilter($hardDiskTypeFilter);
-        $dataFilter->addFilter($locationFilter);
+        $this->dataFilter->addFilter($storageFilter);
+        $this->dataFilter->addFilter($memoryFilter);
+        $this->dataFilter->addFilter($hardDiskTypeFilter);
+        $this->dataFilter->addFilter($locationFilter);
 
-        $this->assertEquals([$storageFilter, $memoryFilter, $hardDiskTypeFilter, $locationFilter], $dataFilter->getFilters());
+        $this->assertEquals([$storageFilter, $memoryFilter, $hardDiskTypeFilter, $locationFilter], $this->dataFilter->getFilters());
     }
 
     /** @test */
     public function filters_can_be_applied()
     {
-        $dataFilter = new DataFilter();
         $storageFilter = new StorageFilter('2TB');
 
-        $dataFilter->addFilter($storageFilter);
+        $this->dataFilter->addFilter($storageFilter);
 
-        $data = [
-            ['Dell R210Intel Xeon X3440', '16GBDDR3', '4x2TBSATA2', 'AmsterdamAMS-01', '€49.99'],
-            ['RH2288v32x Intel Xeon E5-2620v4', '64GBDDR4', '4x500GBSSD', 'Washington D.C.WDC-01', '€161.99'],
-            ['HP DL120G91x Intel E5-1650v3', '64GBDDR43', '2x1TBSATA2', 'SingaporeSIN-11', '€154.99'],
-        ];
+        $filteredData = $this->dataFilter->applyFilters($this->data);
 
-        $filteredData = $dataFilter->applyFilters($data);
+        unset($this->data[0]);
 
-        unset($data[0]);
-
-        $this->assertEquals($data, $filteredData);
+        $this->assertEquals($this->data, $filteredData);
     }
 }

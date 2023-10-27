@@ -14,17 +14,11 @@ class StorageFilterTest extends FilterTestCase
 
         $this->dataFilter->addFilter($storageFilter);
 
-        $data = [
-            ['Dell R210Intel Xeon X3440', '16GBDDR3', '4x2TBSATA2', 'AmsterdamAMS-01', '€49.99'],
-            ['RH2288v32x Intel Xeon E5-2620v4', '64GBDDR4', '4x500GBSSD', 'Washington D.C.WDC-01', '€161.99'],
-            ['HP DL120G91x Intel E5-1650v3', '64GBDDR43', '2x1TBSATA2', 'SingaporeSIN-11', '€154.99'],
-        ];
+        $filteredData = $this->dataFilter->applyFilters($this->data);
 
-        $filteredData = $this->dataFilter->applyFilters($data);
+        unset($this->data[0]);
 
-        unset($data[0]);
-
-        $this->assertEquals($data, $filteredData);
+        $this->assertEquals($this->data, $filteredData);
     }
 
     /** @test */
@@ -34,16 +28,8 @@ class StorageFilterTest extends FilterTestCase
 
         $this->dataFilter->addFilter($storageFilter);
 
-        $data = [
-            ['Dell R210Intel Xeon X3440', '16GBDDR3', '4x2TBSATA2', 'AmsterdamAMS-01', '€49.99'],
-            ['RH2288v32x Intel Xeon E5-2620v4', '64GBDDR4', '2x120GBSSD', 'Washington D.C.WDC-01', '€161.99'],
-            ['HP DL120G91x Intel E5-1650v3', '64GBDDR43', '2x1TBSATA2', 'SingaporeSIN-11', '€154.99'],
-        ];
+        $filteredData = $this->dataFilter->applyFilters($this->data);
 
-        $filteredData = $this->dataFilter->applyFilters($data);
-
-        unset($data[0], $data[2]);
-
-        $this->assertEquals($data, $filteredData);
+        $this->assertEquals(['1' => $this->data[1]], $filteredData);
     }
 }

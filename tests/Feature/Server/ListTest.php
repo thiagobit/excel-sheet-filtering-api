@@ -7,17 +7,24 @@ use App\Filters\HardDiskTypeFilter;
 use App\Filters\LocationFilter;
 use App\Filters\MemoryFilter;
 use App\Filters\StorageFilter;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class ListTest extends TestCase
 {
-    protected DataFilter $dataFilter;
+    protected array $data;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->dataFilter = new DataFilter();
+        $this->data = [
+            ["HP DL180 G92x Intel Xeon E5-2620v3", "64GBDDR4", "2x120GBSSD", "AmsterdamAMS-01", "€199.99"],
+            ["Dell R9304x Intel Xeon E7-4850v3", "4GBDDR3", "8x2TBSATA2", "SingaporeSIN-11", "€1044.99"],
+            ["Dell R210Intel Xeon X3440", "16GBDDR3", "2x2TBSATA2", "DallasDAL-10", "€49.99"],
+        ];
+
+        Cache::set(config('cache.keys.servers'), $this->data);
     }
 
     /** @test */
@@ -26,7 +33,7 @@ class ListTest extends TestCase
         $servers = $this->get(route('v1.servers.index'))
             ->assertSuccessful();
 
-        $this->assertNotEmpty($servers);
+        $this->assertEquals($this->data, $servers->json());
     }
 
     /** @test */
@@ -37,13 +44,7 @@ class ListTest extends TestCase
         $servers = $this->get(route('v1.servers.index', ['storage' => $storageSize]))
             ->assertSuccessful();
 
-        $storageFilter = new StorageFilter($storageSize);
-
-        $this->dataFilter->addFilter($storageFilter);
-
-        $filteredServers = $this->dataFilter->applyFilters($servers->json());
-
-        $this->assertEquals($servers->json(), $filteredServers);
+        $this->assertEquals([$this->data[0]], $servers->json());
     }
 
     /** @test */
@@ -66,13 +67,9 @@ class ListTest extends TestCase
         $servers = $this->get(route('v1.servers.index', ['ram' => $memories]))
             ->assertSuccessful();
 
-        $memoryFilter = new MemoryFilter($memories);
+        unset($this->data[1]);
 
-        $this->dataFilter->addFilter($memoryFilter);
-
-        $filteredServers = $this->dataFilter->applyFilters($servers->json());
-
-        $this->assertEquals($servers->json(), $filteredServers);
+        $this->assertEquals($this->data, $servers->json());
     }
 
     /** @test */
@@ -103,13 +100,7 @@ class ListTest extends TestCase
         $servers = $this->get(route('v1.servers.index', ['harddisk_type' => $hardDiskType]))
             ->assertSuccessful();
 
-        $hardDiskTypeFilter = new HardDiskTypeFilter($hardDiskType);
-
-        $this->dataFilter->addFilter($hardDiskTypeFilter);
-
-        $filteredServers = $this->dataFilter->applyFilters($servers->json());
-
-        $this->assertEquals($servers->json(), $filteredServers);
+        $this->assertEquals([$this->data[0]], $servers->json());
     }
 
     /** @test */
@@ -132,13 +123,7 @@ class ListTest extends TestCase
         $servers = $this->get(route('v1.servers.index', ['location' => $location]))
             ->assertSuccessful();
 
-        $locationFilter = new LocationFilter($location);
-
-        $this->dataFilter->addFilter($locationFilter);
-
-        $filteredServers = $this->dataFilter->applyFilters($servers->json());
-
-        $this->assertEquals($servers->json(), $filteredServers);
+        $this->assertEquals([$this->data[0]], $servers->json());
     }
 
     /** @test */
