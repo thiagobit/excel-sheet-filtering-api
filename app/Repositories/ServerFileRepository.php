@@ -2,11 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Factories\ServerFilterFactory;
 use App\Filters\DataFilter;
-use App\Filters\HardDiskTypeFilter;
-use App\Filters\LocationFilter;
-use App\Filters\MemoryFilter;
-use App\Filters\StorageFilter;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ServerFileRepository implements RepositoryInterface
@@ -34,24 +31,10 @@ class ServerFileRepository implements RepositoryInterface
             return [];
         }
 
-        if (isset($filters['storage'])) {
-            $storageFilter = new StorageFilter($filters['storage']);
-            $this->dataFilter->addFilter($storageFilter);
-        }
+        foreach ($filters as $filter => $param) {
+            $serverFilter = ServerFilterFactory::createFilter($filter, $param);
 
-        if (isset($filters['ram'])) {
-            $memoryFilter = new MemoryFilter($filters['ram']);
-            $this->dataFilter->addFilter($memoryFilter);
-        }
-
-        if (isset($filters['harddisk_type'])) {
-            $hardDiskTypeFilter = new HardDiskTypeFilter($filters['harddisk_type']);
-            $this->dataFilter->addFilter($hardDiskTypeFilter);
-        }
-
-        if (isset($filters['location'])) {
-            $LocationFilter = new LocationFilter($filters['location']);
-            $this->dataFilter->addFilter($LocationFilter);
+            $this->dataFilter->addFilter($serverFilter);
         }
 
         return $this->dataFilter->applyFilters($servers);
