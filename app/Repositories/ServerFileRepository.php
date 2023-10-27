@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Filters\DataFilter;
 use App\Filters\HardDiskTypeFilter;
+use App\Filters\LocationFilter;
 use App\Filters\MemoryFilter;
 use App\Filters\StorageFilter;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -46,6 +47,11 @@ class ServerFileRepository implements RepositoryInterface
         if (isset($filters['harddisk_type'])) {
             $hardDiskTypeFilter = new HardDiskTypeFilter($filters['harddisk_type']);
             $this->dataFilter->addFilter($hardDiskTypeFilter);
+        }
+
+        if (isset($filters['location'])) {
+            $LocationFilter = new LocationFilter($filters['location']);
+            $this->dataFilter->addFilter($LocationFilter);
         }
 
         return $this->dataFilter->applyFilters($servers);
