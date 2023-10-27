@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Factories\ServerFilterFactory;
 use App\Filters\DataFilter;
+use Illuminate\Support\Facades\Cache;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ServerFileRepository implements RepositoryInterface
@@ -25,7 +26,9 @@ class ServerFileRepository implements RepositoryInterface
 
     public function all(array $filters = []): array
     {
-        $servers = $this->loadData();
+        $servers = Cache::remember('servers', now()->addMinutes(30), function () {
+            return $this->loadData();
+        });
 
         if (empty($servers)) {
             return [];
