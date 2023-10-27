@@ -39,7 +39,7 @@ docker run --rm \
 - Description: List all servers based on filter criteria
 - Parameters:
   - `storage`:
-    - Description: Size max limit of the server storage
+    - Description: Max size limit of the server storage
     - Type: `string`
     - Required: `false`
     - Possible values: `0`, `250GB`, `500GB`, `1TB`, `2TB`, `3TB`, `4TB`, `8TB`, `12TB`, `24TB`, `48TB`, `72TB`.
