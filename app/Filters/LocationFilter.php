@@ -7,10 +7,8 @@ class LocationFilter implements FilterInterface
     public function __construct(private readonly string $location) {
     }
 
-    public function filter($data): array
+    public function filter($item): bool
     {
-        return array_filter($data, function ($item) {
-            return str_contains($item[3], $this->location);
-        });
+        return str_contains($item[3], $this->location);
     }
 }

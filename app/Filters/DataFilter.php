@@ -16,12 +16,16 @@ class DataFilter
         return $this->filters;
     }
 
-    public function applyFilters($data)
+    public function applyFilters($data): array
     {
-        foreach ($this->filters as $filter) {
-            $data = $filter->filter($data);
-        }
+        return array_filter($data, function ($item) {
+            foreach ($this->filters as $filter) {
+                if (!$filter->filter($item)) {
+                    return false;
+                }
+            }
 
-        return $data;
+            return true;
+        });
     }
 }

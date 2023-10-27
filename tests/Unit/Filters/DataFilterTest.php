@@ -3,6 +3,9 @@
 namespace Filters;
 
 use App\Filters\DataFilter;
+use App\Filters\HardDiskTypeFilter;
+use App\Filters\LocationFilter;
+use App\Filters\MemoryFilter;
 use App\Filters\StorageFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -12,12 +15,20 @@ class DataFilterTest extends TestCase
     public function filters_can_be_added()
     {
         $dataFilter = new DataFilter();
+
         $storageFilter = new StorageFilter('2TB');
+        $memoryFilter = new MemoryFilter(['32', '64']);
+        $hardDiskTypeFilter = new HardDiskTypeFilter('SSD');
+        $locationFilter = new LocationFilter('Amsterdam');
 
         $dataFilter->addFilter($storageFilter);
+        $dataFilter->addFilter($memoryFilter);
+        $dataFilter->addFilter($hardDiskTypeFilter);
+        $dataFilter->addFilter($locationFilter);
 
-        $this->assertEquals([$storageFilter], $dataFilter->getFilters());
+        $this->assertEquals([$storageFilter, $memoryFilter, $hardDiskTypeFilter, $locationFilter], $dataFilter->getFilters());
     }
+
     /** @test */
     public function filters_can_be_applied()
     {

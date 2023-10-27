@@ -3,14 +3,16 @@
 namespace Filters;
 
 use App\Filters\LocationFilter;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\FilterTestCase;
 
-class LocationFilterTest extends TestCase
+class LocationFilterTest extends FilterTestCase
 {
     /** @test */
     public function location_can_be_filtered()
     {
         $locationFilter = new LocationFilter('Amsterdam');
+
+        $this->dataFilter->addFilter($locationFilter);
 
         $data = [
             ['Dell R210Intel Xeon X3440', '16GBDDR3', '4x2TBSATA2', 'AmsterdamAMS-01', '€49.99'],
@@ -18,7 +20,7 @@ class LocationFilterTest extends TestCase
             ['HP DL120G91x Intel E5-1650v3', '64GBDDR43', '2x1TBSATA2', 'SingaporeSIN-11', '€154.99'],
         ];
 
-        $filteredData = $locationFilter->filter($data);
+        $filteredData = $this->dataFilter->applyFilters($data);
 
         unset($data[1], $data[2]);
 

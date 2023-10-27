@@ -4,5 +4,5 @@ namespace App\Filters;
 
 interface FilterInterface
 {
-    public function filter($data);
+    public function filter($item);
 }

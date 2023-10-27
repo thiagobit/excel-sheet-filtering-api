@@ -3,14 +3,16 @@
 namespace Filters;
 
 use App\Filters\HardDiskTypeFilter;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\FilterTestCase;
 
-class HardDiskTypeFilterTest extends TestCase
+class HardDiskTypeFilterTest extends FilterTestCase
 {
     /** @test */
-    public function filter_works_for_SATA()
+    public function harddisk_can_be_filtered_for_SATA()
     {
         $hardDiskTypeFilter = new HardDiskTypeFilter('SATA');
+
+        $this->dataFilter->addFilter($hardDiskTypeFilter);
 
         $data = [
             ['Dell R210Intel Xeon X3440', '16GBDDR3', '4x2TBSATA2', 'AmsterdamAMS-01', '€49.99'],
@@ -18,7 +20,7 @@ class HardDiskTypeFilterTest extends TestCase
             ['HP DL120G91x Intel E5-1650v3', '64GBDDR43', '2x1TBSATA2', 'SingaporeSIN-11', '€154.99'],
         ];
 
-        $filteredData = $hardDiskTypeFilter->filter($data);
+        $filteredData = $this->dataFilter->applyFilters($data);
 
         unset($data[1]);
 
@@ -26,9 +28,11 @@ class HardDiskTypeFilterTest extends TestCase
     }
 
     /** @test */
-    public function filter_works_for_SSD()
+    public function harddisk_can_be_filtered_for_SSD()
     {
         $hardDiskTypeFilter = new HardDiskTypeFilter('SSD');
+
+        $this->dataFilter->addFilter($hardDiskTypeFilter);
 
         $data = [
             ['Dell R210Intel Xeon X3440', '16GBDDR3', '4x2TBSATA2', 'AmsterdamAMS-01', '€49.99'],
@@ -36,7 +40,7 @@ class HardDiskTypeFilterTest extends TestCase
             ['HP DL120G91x Intel E5-1650v3', '64GBDDR43', '2x1TBSATA2', 'SingaporeSIN-11', '€154.99'],
         ];
 
-        $filteredData = $hardDiskTypeFilter->filter($data);
+        $filteredData = $this->dataFilter->applyFilters($data);
 
         unset($data[0], $data[2]);
 
@@ -44,9 +48,11 @@ class HardDiskTypeFilterTest extends TestCase
     }
 
     /** @test */
-    public function filter_works_for_SAS()
+    public function harddisk_can_be_filtered_for_SAS()
     {
         $hardDiskTypeFilter = new HardDiskTypeFilter('SAS');
+
+        $this->dataFilter->addFilter($hardDiskTypeFilter);
 
         $data = [
             ['Dell R210Intel Xeon X3440', '16GBDDR3', '4x2TBSATA2', 'AmsterdamAMS-01', '€49.99'],
@@ -54,7 +60,7 @@ class HardDiskTypeFilterTest extends TestCase
             ['HP DL120G91x Intel E5-1650v3', '64GBDDR43', '2x1TBSAS', 'SingaporeSIN-11', '€154.99'],
         ];
 
-        $filteredData = $hardDiskTypeFilter->filter($data);
+        $filteredData = $this->dataFilter->applyFilters($data);
 
         unset($data[0], $data[1]);
 
