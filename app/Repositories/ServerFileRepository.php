@@ -15,7 +15,7 @@ class ServerFileRepository implements RepositoryInterface
 
     private function loadData(): array
     {
-        return Cache::remember('servers', now()->addMinutes(30), function () {
+        return Cache::remember(config('cache.keys.servers'), now()->addMinutes(30), function () {
             $spreadsheet = IOFactory::load(storage_path('app/servers/LeaseWeb_servers_filters_assignment.xlsx'));
             $servers = $spreadsheet->getActiveSheet()->toArray();
 

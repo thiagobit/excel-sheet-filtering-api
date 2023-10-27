@@ -108,4 +108,18 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Keys
+    |--------------------------------------------------------------------------
+    |
+    | Here you define all application cache keys.
+    |
+    */
+
+    'keys' => [
+
+        'servers' => 'servers',
+
+    ],
 ];
