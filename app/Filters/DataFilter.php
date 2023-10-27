@@ -19,7 +19,7 @@ class DataFilter
     public function applyFilters($data): array
     {
         return array_filter($data, function ($item) {
-            foreach ($this->filters as $filter) {
+            foreach ($this->getFilters() as $filter) {
                 if (!$filter->filter($item)) {
                     return false;
                 }
