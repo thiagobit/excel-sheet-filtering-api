@@ -17,7 +17,7 @@ class ServerFileRepository implements RepositoryInterface
 
     private function loadData(): array
     {
-        $spreadsheet = IOFactory::load(storage_path('servers/LeaseWeb_servers_filters_assignment.xlsx'));
+        $spreadsheet = IOFactory::load(storage_path('app/servers/LeaseWeb_servers_filters_assignment.xlsx'));
         $servers = $spreadsheet->getActiveSheet()->toArray();
 
         // remove headers

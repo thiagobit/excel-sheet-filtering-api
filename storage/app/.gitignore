@@ -1,3 +1,5 @@
 *
 !public/
+!servers/
+!servers/LeaseWeb_servers_filters_assignment.xlsx
 !.gitignore
