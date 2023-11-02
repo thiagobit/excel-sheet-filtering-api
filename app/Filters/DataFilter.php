@@ -18,8 +18,14 @@ class DataFilter
 
     public function applyFilters($data): array
     {
-        return array_filter($data, function ($item) {
-            foreach ($this->getFilters() as $filter) {
+        $filters = $this->getFilters();
+
+        if (empty($filters)) {
+            return $data;
+        }
+        
+        return array_filter($data, function ($item) use ($filters) {
+            foreach ($filters as $filter) {
                 if (!$filter->filter($item)) {
                     return false;
                 }
