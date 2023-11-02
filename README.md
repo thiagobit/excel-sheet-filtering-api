@@ -1,6 +1,11 @@
-# Leaseweb - Assessment Test
+# Leaseweb - Backend PHP Assessment Test
 
-Assessment test for the Backend PHP Developer role.
+This application consists in get and filter data from a _xlsx_ Excel sheet file using a _REST API_.
+* An example of the file is versioned under `storage/app/servers/` directory for testing purpose.
+* The application is working with a cache layer to reduce the response time;
+* It's using the _Repository_ pattern to centralize and encapsulate the logic for accessing and manipulating data, promoting separation of concerns and enhancing the maintainability and testability of the codebase.
+* It's also working with _Factory_ pattern for filters objects creation, and _traits_.
+* There is a _docker-composer.yml_ file to facilitate the environment setup with _Docker_.
 
 ## Configuration:
 1. Create the `.env` file based on `.env.example`:
@@ -8,7 +13,7 @@ Assessment test for the Backend PHP Developer role.
 cp .env.example .env
 ```
 
-2. Since it's using [Laravel Sail](https://laravel.com/docs/10.x/sail), you need to execute the following command to first install the dependencies and be able to run Sail commands:
+2. Since it's using _[Laravel Sail](https://laravel.com/docs/10.x/sail)_, you need to execute the following command to first install the dependencies and be able to run _Sail_ commands:
 ```shell
 docker run --rm \
     -u "$(id -u):$(id -g)" \
@@ -18,12 +23,12 @@ docker run --rm \
     composer install --ignore-platform-reqs
 ```
 
-3. Create and run Docker containers:
+3. Create and run _Docker_ containers:
 ```shell
 ./vendor/bin/sail up -d
 ```
 
-4. Generate the application key:
+4. Generate the _application key_:
 ```shell
 ./vendor/bin/sail artisan key:generate
 ```
