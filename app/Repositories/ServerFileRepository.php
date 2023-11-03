@@ -34,6 +34,10 @@ class ServerFileRepository implements RepositoryInterface
             return [];
         }
 
+        if (empty($filters)) {
+            return $servers;
+        }
+
         foreach ($filters as $filter => $param) {
             $serverFilter = ServerFilterFactory::createFilter($filter, $param);
 
