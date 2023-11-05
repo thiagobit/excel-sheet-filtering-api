@@ -2,11 +2,6 @@
 
 namespace Server;
 
-use App\Filters\DataFilter;
-use App\Filters\HardDiskTypeFilter;
-use App\Filters\LocationFilter;
-use App\Filters\MemoryFilter;
-use App\Filters\StorageFilter;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
