@@ -1,11 +1,15 @@
-# Leaseweb - Backend PHP Assessment Test
+# Excell Sheet filtering API
 
-This application consists in get and filter data from a _xlsx_ Excel sheet file using a _REST API_.
-* An example of the file is versioned under `storage/app/servers/` directory for testing purpose.
-* The application is working with a cache layer to reduce the response time;
+This application consists in get and filter data from a _.xlsx_ Excel sheet file using a _REST API_ done in _Laravel 10_.
+* It was built following _SOLID_ principles.
 * It's using the _Repository_ pattern to centralize and encapsulate the logic for accessing and manipulating data, promoting separation of concerns and enhancing the maintainability and testability of the codebase.
 * It's also working with _Factory_ pattern for filters objects creation, and _traits_.
+* The application is working with a cache layer to reduce the response time.
+* An example of the file is versioned under `storage/app/servers/` directory for testing purpose.
 * There is a _docker-composer.yml_ file to facilitate the environment setup with _Docker_.
+
+## Requirements
+- [Docker](https://docs.docker.com/engine/install/)
 
 ## Configuration:
 1. Create the `.env` file based on `.env.example`:
