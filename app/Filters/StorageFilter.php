@@ -8,6 +8,7 @@ class StorageFilter implements FilterInterface
 {
     use ConversionTrait;
 
+    // max size in GB
     private readonly int|float $maxSize;
 
     public function __construct(string $maxSize)
@@ -15,7 +16,12 @@ class StorageFilter implements FilterInterface
         $this->setMaxSize($maxSize);
     }
 
-    private function setMaxSize(string $maxSize): void
+    public function getMaxSize(): int|float
+    {
+        return $this->maxSize;
+    }
+
+    protected function setMaxSize(string $maxSize): void
     {
         // expected format: '2TB'
         $pattern = '/(\d+)(TB|GB|MB|KB|B)([A-Z0-9]+)?/';
