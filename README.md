@@ -1,4 +1,4 @@
-# Excell Sheet filtering API
+# Excel Sheet filtering API
 
 This application consists in get and filter data from a _.xlsx_ Excel sheet file using a _REST API_ done in _Laravel 10_.
 * It was built following _SOLID_ principles.
